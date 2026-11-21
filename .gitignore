@@ -1,0 +1,12 @@
+# 1C:Enterprise-Dateibasen und Dienstdateien
+*.1CD
+*.lgp
+*.lgf
+*.cfl
+*.cf
+*.cfu
+
+# Temporäre Dateien und Betriebssystem
+*.tmp
+Thumbs.db
+.DS_Store

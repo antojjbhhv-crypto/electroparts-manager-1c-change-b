@@ -1,0 +1,58 @@
+# Phase 2A — манифест артефактов поведения
+
+Снято: 21.11.2026, 15:27 (после закрытия клиента)
+Алгоритм: SHA-256, нижний регистр
+Формат строк: `<sha256>  <размер, байт>  <путь от implementation-b>`
+
+## Код обработки Korrektur (work-config)
+
+```
+6ad667d151932a0c94185ffbe2cadb1c7f0c47ae8e7912b6ba86051366e52e8e  5834  work-config\DataProcessors\Korrektur\Ext\ObjectModule.bsl
+f1d77903a5bd7981743271eecff7b12f431bc4ac05235fb639a30f66556df764  4780  work-config\DataProcessors\Korrektur\Forms\Форма\Ext\Form.xml
+81994f8d776c969a3ed5680d8a5d3922fa1e28dd0995850c196d185befcffa64  1162  work-config\DataProcessors\Korrektur\Forms\Форма\Ext\Form\Module.bsl
+```
+
+## База test-ib-d3
+
+```
+28da1c7759b73171f536b771fc9fb7dfd349ceb92dba5e46e18e114e980870ae  4308992  test-ib-d3\1Cv8.1CD
+f53ba28bad529678b35b17155b493d466d5c7afe407520d1cdfa17824a0d63bc  73526    test-ib-d3\1Cv8Log\20261116000000.lgp
+024734010e7ce2528d8358947a652c2c925a432c5945da25862fa45c111a2b43  1209     test-ib-d3\1Cv8Log\1Cv8.lgf
+```
+
+## Прямая выгрузка регистра
+
+```
+6e4d3ecb41c6abf67ae75ba9db469e3d64ea4d0781c01566e74a54cd82b96f50  3287  reports\phase2a\KORREKTURJOURNAL_DUMP.txt
+81994f8d776c969a3ed5680d8a5d3922fa1e28dd0995850c196d185befcffa64  1162  backup\diag_journal_2026-11-21\Module.bsl
+57ed69f0d9e46afb692725019b06f5518aee8fe0d2e04e0b3892b3e2c09352ab  304   reports\phase2a\diag_load.log
+57ed69f0d9e46afb692725019b06f5518aee8fe0d2e04e0b3892b3e2c09352ab  304   reports\phase2a\restore_load.log
+```
+
+## Замороженный снимок журнала (13:40)
+
+```
+82ca4379fa1fda76a93ba956d5b0392fb33c2e752c6e1c24cd400708aa9699e8  62597  backup\phase2a_freeze_2026-11-21_1340\20261116000000.lgp
+262da5dade66b3d6368e454125ba6db175b8778f6c0f3ca00db8263fb4e2c416  1193   backup\phase2a_freeze_2026-11-21_1340\1Cv8.lgf
+```
+
+## Отчёты Phase 2A
+
+```
+1797a15c6289e5c1c964cdc45a62c09bf68b46c7c2a828acb847ea7f8fb09abe  4084  reports\phase2a\PHASE2A_T_I_REPORT.md
+7c91b34abe9915a99971e24bae3f04d81326dc178ad60962acb8fb8e3041a97e  2408  reports\phase2a\PHASE2A_T_I2_REPORT.md
+10ba53e3b3a3970989d0ef1c3a27d59486e7a4077245cd831f8d250c50d419a7  4765  reports\phase2a\PHASE2A_T_I3_REPORT.md
+718f48a6749c30b3eb3b8d5ed2e68b0cbc00c1d96ee84593dae9f31bb505e75f  4584  reports\phase2a\PHASE2A_T_R_REPORT.md
+047ef46b7f38b43d829f60334b4f77084a6713d94978ae46c65f1fe30567d5ef  3661  reports\phase2a\PHASE2A_T_J_REPORT.md
+fb98f3021188f6a1b412af8663059141461d94b9226659fc6e5eaf344cb3adc5  3465  reports\phase2a\PHASE2A_D10B_RUNTIME_REPORT.md
+090761b23a7b80327b4b0c3842e28a58c77c25ebdc0d48ff9e92ea92742378e7  7368  reports\phase2a\PHASE2A_FINAL_BEHAVIORAL_VERDICT.md
+bec0a479105f56cbe506397985ce9c4e97ed894ddca18094374feb4bbac8bbd6  5232  reports\phase2a\PHASE2A_PREFLIGHT.md
+```
+
+## Примечания
+
+- Хеш самого манифеста не включён (самореферентность).
+- `1Cv8.1CD` меняется при каждом сеансе; значение соответствует состоянию после закрытия клиента в 15:27.
+- `1Cv8.lgf` изменился (`024734…`, 1209 вместо `262da5…`, 1193) после перезагрузки конфигурации в базу и не совпадает с замороженным снимком 13:40.
+- Дамп регистра снят в 15:16 (7 записей); запись `55555555-…` → `000000010` появилась позже, в 15:24, и в дамп не входит — она подтверждается журналом регистрации.
+- Версия платформы: 1С:Предприятие 8.3.27.1508 (учебная). `1cv8t.exe` — основной (клиент и конфигуратор, режим `DESIGNER`), `1cv8ct.exe` — тонкий клиент, `1cv8st.exe` — сервер.

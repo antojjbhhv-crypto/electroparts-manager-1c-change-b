@@ -1,0 +1,38 @@
+# Phase 2A — манифест артефактов независимого аудита
+
+Снято: 21.11.2026, 15:52
+Алгоритм: SHA-256, нижний регистр
+Формат строк: `<sha256>  <размер, байт>  <путь от implementation-b>`
+
+## Артефакты аудита
+
+```
+821e9c7efd3c49762d46eb12d8bb4e54aa650d449f8ea93ef4e6abda989d1a45  12294  reports\phase2a\PHASE2A_INDEPENDENT_EVIDENCE_AUDIT.md
+218503dbcb478b018f908c1bac1430aae5180de0085fa996819d0e7e9d2cbd8f  2252   reports\phase2a\PHASE2A_UUID_DOCUMENT_RECONCILIATION.csv
+c2ed157de47277e3ed0b695ee54e7f7ddadab63ce4fe1f43edfe026724573818  5101   reports\phase2a\PHASE2A_REVISED_VERDICT_MATRIX.md
+```
+
+Хеш самого файла в список не включён (самореферентность).
+
+## Проверенные артефакты Phase 2A
+
+Сверка с `PHASE2A_FINAL_BEHAVIORAL_hashes.txt`: совпало 20 из 20 записей.
+
+```
+6ad667d151932a0c94185ffbe2cadb1c7f0c47ae8e7912b6ba86051366e52e8e  5834    work-config\DataProcessors\Korrektur\Ext\ObjectModule.bsl
+f1d77903a5bd7981743271eecff7b12f431bc4ac05235fb639a30f66556df764  4780    work-config\DataProcessors\Korrektur\Forms\Форма\Ext\Form.xml
+81994f8d776c969a3ed5680d8a5d3922fa1e28dd0995850c196d185befcffa64  1162    work-config\DataProcessors\Korrektur\Forms\Форма\Ext\Form\Module.bsl
+28da1c7759b73171f536b771fc9fb7dfd349ceb92dba5e46e18e114e980870ae  4308992 test-ib-d3\1Cv8.1CD
+f53ba28bad529678b35b17155b493d466d5c7afe407520d1cdfa17824a0d63bc  73526   test-ib-d3\1Cv8Log\20261116000000.lgp
+024734010e7ce2528d8358947a652c2c925a432c5945da25862fa45c111a2b43  1209    test-ib-d3\1Cv8Log\1Cv8.lgf
+6e4d3ecb41c6abf67ae75ba9db469e3d64ea4d0781c01566e74a54cd82b96f50  3287    reports\phase2a\KORREKTURJOURNAL_DUMP.txt
+81994f8d776c969a3ed5680d8a5d3922fa1e28dd0995850c196d185befcffa64  1162    backup\diag_journal_2026-11-21\Module.bsl
+82ca4379fa1fda76a93ba956d5b0392fb33c2e752c6e1c24cd400708aa9699e8  62597   backup\phase2a_freeze_2026-11-21_1340\20261116000000.lgp
+262da5dade66b3d6368e454125ba6db175b8778f6c0f3ca00db8263fb4e2c416  1193    backup\phase2a_freeze_2026-11-21_1340\1Cv8.lgf
+```
+
+## Примечания
+
+- Аудит выполнен в режиме чтения: файлы базы, конфигурации и отчётов Phase 2A не изменялись.
+- Созданы только четыре новых файла аудита (`PHASE2A_INDEPENDENT_EVIDENCE_AUDIT.md`, `PHASE2A_UUID_DOCUMENT_RECONCILIATION.csv`, `PHASE2A_REVISED_VERDICT_MATRIX.md`, данный манифест).
+- `1Cv8.1CD` меняется при каждом сеансе; значение соответствует состоянию после закрытия клиента 15:27.

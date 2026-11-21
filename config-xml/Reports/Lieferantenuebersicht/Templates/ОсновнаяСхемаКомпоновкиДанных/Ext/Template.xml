@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Lieferant</dataPath>
+			<field>Lieferant</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Lieferant</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Kuerzel</dataPath>
+			<field>Kuerzel</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Kuerzel</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Komponenten</dataPath>
+			<field>Komponenten</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Komponenten</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Bestand</dataPath>
+			<field>Bestand</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Bestand</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>UnterMindestbestand</dataPath>
+			<field>UnterMindestbestand</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Unter Mindestbestand</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ
+	Поставщики.Ссылка КАК Lieferant,
+	Поставщики.Kuerzel КАК Kuerzel,
+	ЕСТЬNULL(Свод.Компонентов, 0) КАК Komponenten,
+	ЕСТЬNULL(Свод.Остаток, 0) КАК Bestand,
+	ЕСТЬNULL(Свод.Дефицит, 0) КАК UnterMindestbestand
+ИЗ
+	Справочник.Lieferanten КАК Поставщики
+	ЛЕВОЕ СОЕДИНЕНИЕ (
+		ВЫБРАТЬ
+			Компоненты.Lieferant КАК Lieferant,
+			КОЛИЧЕСТВО(РАЗЛИЧНЫЕ Компоненты.Ссылка) КАК Компонентов,
+			СУММА(ЕСТЬNULL(Остатки.MengeОстаток, 0)) КАК Остаток,
+			СУММА(ВЫБОР
+					КОГДА ЕСТЬNULL(Остатки.MengeОстаток, 0) &lt; Компоненты.Mindestbestand
+						ТОГДА 1
+					ИНАЧЕ 0
+				КОНЕЦ) КАК Дефицит
+		ИЗ
+			Справочник.Komponenten КАК Компоненты
+			ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Bestaende.Остатки(&amp;DatumRestbestand) КАК Остатки
+				ПО Остатки.Komponenten = Компоненты.Ссылка
+		ГДЕ
+			НЕ Компоненты.ПометкаУдаления
+			И Компоненты.Lieferant &lt;&gt; ЗНАЧЕНИЕ(Справочник.Lieferanten.ПустаяСсылка)
+		СГРУППИРОВАТЬ ПО
+			Компоненты.Lieferant
+	) КАК Свод
+		ПО Свод.Lieferant = Поставщики.Ссылка
+УПОРЯДОЧИТЬ ПО
+	Kuerzel</query>
+	</dataSet>
+	<parameter>
+		<name>DatumRestbestand</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Datum Restbestand</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>ТекущаяДата()</expression>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Вариант1</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Вариант1</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Komponenten</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Bestand</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>UnterMindestbestand</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Формат</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ЧН=0</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemField">
+						<dcsset:field>Kuerzel</dcsset:field>
+						<dcsset:orderType>Asc</dcsset:orderType>
+					</dcsset:item>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Lieferant</dcsset:field>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Kuerzel</dcsset:field>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Komponenten</dcsset:field>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Bestand</dcsset:field>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>UnterMindestbestand</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>
