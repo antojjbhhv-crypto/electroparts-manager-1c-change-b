@@ -9,7 +9,7 @@
 ## 2. Inhalt
 
 - `config-xml/` — 29 Dateien, byte-identisch mit `config/` des Ausgangspakets (Vergleich per SHA-256: 0 Abweichungen).
-- `docs/` — 58 Dateien (Berichte, Prüfsummenlisten, ein Screenshot).
+- `docs/` — 78 Dateien (Berichte, Prüfsummenlisten, Screenshots und Evidenzdateien der Laufzeitdiagnose).
 - `RELEASE_NOTES.md` — Begleitdokument, bis auf die unten genannten Änderungen unverändert.
 - `README.md` — neu für dieses Repository.
 - Nicht enthalten: Dateibasen (`*.1CD`), Registrierungsprotokolle (`*.lgp`, `*.lgf`), Sicherungen, temporäre Testbasen, lokale Umgebungsdateien, Zugangsdaten.
@@ -35,13 +35,15 @@ Im ursprünglichen Veröffentlichungsderivat wurden der lokale Benutzername und 
 
 ## 5. Manifest
 
-- `MANIFEST_SHA256.txt` enthält 89 Einträge: `config-xml/` (29), `docs/` (58), `README.md`, `RELEASE_NOTES.md`.
+- `MANIFEST_SHA256.txt` enthält 109 Einträge: `config-xml/` (29), `docs/` (78), `README.md`, `RELEASE_NOTES.md`.
 - Nicht aufgenommen: `MANIFEST_SHA256.txt` (Selbstreferenz), `PROVENANCE.md` (nennt die Prüfsumme des Manifests) und `.gitignore` (Repository-Konfiguration).
-- SHA-256 des Manifests: `daad18258a77512d82f154943139eee9bcbad0958066078ba1c4eaf6b551572c`.
+- SHA-256 des Manifests: `90102610efa819c6066edeee6574f0ce881a72564d39a43f2ab8c1dbab51ad54`.
 
 ## 6. Follow-up branch `audit-remediation`
 
 - Ausgangscommit: `0fe671baacc7c491c8bce99c5bf6d486f7dd451d`.
 - Der Branch ist ein unveröffentlichter Remediation-Kandidat; der bestehende Release-Tag `v1.1.0-change-b` bleibt unverändert.
-- Die aktualisierte SHA-256-Liste enthält 89 Dateien; SHA-256: `daad18258a77512d82f154943139eee9bcbad0958066078ba1c4eaf6b551572c`.
+- Die aktuelle SHA-256-Liste des Branches enthält 109 Dateien; SHA-256: `90102610efa819c6066edeee6574f0ce881a72564d39a43f2ab8c1dbab51ad54`. Prüfung gegen den Arbeitsbaum: 109 von 109 Einträgen bestätigt, 0 Abweichungen.
+- `config-xml/` ist seit dem Commit `af73010` unverändert: `git diff af73010..HEAD -- config-xml` ist leer. Die Kandidatenhashes in Abschnitt 3 bleiben gültig.
+- Dokumentationskorrekturen im Übergabepaket (Test 3 mit Transaktionsrücknahme, Test 4B für die negative Richtung, Test 6C als direkte Injektion, aktualisierte Commit- und Manifestangaben) ändern weder `config-xml` noch den Kandidatencode.
 - Die Änderungen an Rechten und Payload-Identität sind statische Kandidaten und müssen vor dem Merge auf 1C:Enterprise 8.3.27.1508 getestet werden.
