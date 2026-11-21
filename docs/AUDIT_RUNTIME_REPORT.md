@@ -201,3 +201,8 @@
 - `docs/evidence/runtime_ui_diagnosis_2026-11-21/static-diagnosis.txt` — `18f59fd97aecd704e4742a3ad9fdcb7eb46a3db2fb031614cb3ca0047fee2ae1`
 - `docs/evidence/runtime_ui_diagnosis_2026-11-21/uia-admin-elements.txt` — `63e570948e4aa529d5a3a331e5d4bc4dbd43657a68dc94e42124d4ff0f56b2ad`
 - `docs/evidence/runtime_ui_diagnosis_2026-11-21/uia-audit_korr-elements.txt` — `6f19bf6cd8b9de2d777c48ff1ba4eff222ce9508d9e1ffadb22c650249192d79`
+
+
+## 10. Передача в полноценное окружение
+
+Подготовлен пакет передачи для администратора полноценной 1С 8.3.27: `docs/HANDOVER_RUNTIME_VALIDATION.md` — требования к платформе, порядок развёртывания, матрица пользователей и ролей, сценарии тестов 2–7, форма протокола результатов и минимальная тестовая проба. Кандидат не изменялся. Этап остаётся `BLOCKED` до прогона в полноценной среде; результаты разделов 1–9 сохранены без изменений.
