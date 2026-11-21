@@ -152,3 +152,52 @@
 - `docs/evidence/runtime_base_role_2026-11-21/dbcfg_runtime.txt` — `36cf7e06f87ff1f1e4540aea9f6bf7cc4bb652ee5122533f5833f4f8dd84624b`
 - `docs/evidence/runtime_base_role_2026-11-21/report_users.txt` — `e695ff36f60bf473694e6b7001170c91259a6c7eaf63d09161e1079f239ae67e`
 - `docs/evidence/runtime_base_role_2026-11-21/uia-elements.txt` — `6f19bf6cd8b9de2d777c48ff1ba4eff222ce9508d9e1ffadb22c650249192d79`
+
+
+## 9. Диагностика интерфейса (этап 3, 2026-11-21)
+
+**HEAD ветки:** `d1d410230889063f8be0158cd93a8525ae0a25b6`. Бизнес-код, `Rights.xml` роли `Korrektur`, `main`, тег и релиз не изменялись.
+
+### 9.1. Статическая проверка метаданных
+
+- `DefaultRunMode = ManagedApplication`.
+- Подсистема `Lager`: `IncludeInCommandInterface=true`, `UseOneCommand=false`; в составе — `Catalog.Komponenten`, `Catalog.Lieferanten`, `Document.Wareneingang`, `Document.Verbrauch`, `DataProcessor.Korrektur`, `Report.Lagerbestand`, `Report.Lieferantenuebersicht`.
+- Каталог `Subsystems/Lager/Ext` отсутствует: кастомный командный интерфейс подсистемы не задан, команды формируются автоматически из состава.
+- `DataProcessor.Korrektur`: `UseStandardCommands=true`, `DefaultForm=DataProcessor.Korrektur.Form.Форма`, форма в составе есть.
+- Роль `Korrektur`: `DataProcessor.Korrektur` — `Use` и `View`; `Catalog.Komponenten` — `Read`/`View`; документы — `Read/Insert/Update/Posting/View`; регистры — `Read/View`.
+- Функциональные опции отсутствуют; `MainSection` и настройки `CommandInterface` в `Configuration.xml` не заданы.
+
+Вывод по метаданным: включение обработки в подсистему и права `Use/View` корректны; статической причины скрывать раздел `Lager` нет.
+
+### 9.2. Рантайм-проверка
+
+- `audit_korr` (`Korrektur` + `AuditClientBase`): клиент запускается, подключается и аутентифицируется, но раздел `Lager` и команды отсутствуют; панель «Функции» пуста; форма `Korrektur` недоступна.
+- Дифференциальная проверка: `audit_admin` (AuditFullAccess + Korrektur, полные права) видит **тот же пустой интерфейс** — только кнопки `Функции`, `Оповещения`, `audit_admin`, `Сервис и настройки`.
+- Следовательно, пустой интерфейс не вызван сочетанием ролей `audit_korr` и не является дефектом роли `Korrektur` или базовой роли.
+- Серверные точки входа для тестовой обвязки не сработали: модуль приложения выполняется только в сессии без пользователя, модуль сеанса отчёт не записал. Обход прав не применялся.
+
+### 9.3. Итог диагностики
+
+Причина отсутствия раздела и команды в метаданных конфигурации не обнаружена: состав подсистемы, `UseStandardCommands` и права корректны. Пустой интерфейс воспроизводится и у администратора, поэтому это ограничение клиентского окружения/учебной платформы, а не дефект кандидата или ролей. Минимальное исправление конфигурации по метаданным не показано; безопасный harness без работающей серверной точки входа создать нельзя, а обход прав запрещён.
+
+### 9.4. Результаты проверок
+
+| № | Проверка | Статус |
+|---|---|---|
+| 2 | Доступность обработки и права роли | **NOT_RUN** — форма недоступна, причина в окружении |
+| 3 | Прямые запреты записи регистров | **NOT_RUN** — нет точки входа под `audit_korr` |
+| 4 | Контролируемая запись журнала | **NOT_RUN** |
+| 5 | Идемпотентность и payload | **NOT_RUN** |
+| 6 | Привилегированный режим | **NOT_RUN** |
+| 7 | T-F | **NOT_RUN** |
+
+### 9.5. Вердикт этапа
+
+`BLOCKED`: метаданные корректны, но клиентский интерфейс не отображает подсистему даже администратору; рантайм-проверки 2–7 выполнить нельзя. Альтернатива — повторить прогон в окружении с работающим управляемым интерфейсом (не учебный клиент) либо отдельно исследовать оболочку учебного клиента; без обхода прав.
+
+### 9.6. Доказательства этапа
+- `docs/evidence/runtime_ui_diagnosis_2026-11-21/admin-interface-empty.png` — `9873e338801f6a9bfa75a26aa9cf916f22ee81bdd4098d18b31f9b7b41db3258`
+- `docs/evidence/runtime_ui_diagnosis_2026-11-21/audit_korr-interface-empty.png` — `c7e8833c387360aeda7c9b39183c870c7eebe449dc34cda8f7438ca8c22e8113`
+- `docs/evidence/runtime_ui_diagnosis_2026-11-21/static-diagnosis.txt` — `18f59fd97aecd704e4742a3ad9fdcb7eb46a3db2fb031614cb3ca0047fee2ae1`
+- `docs/evidence/runtime_ui_diagnosis_2026-11-21/uia-admin-elements.txt` — `63e570948e4aa529d5a3a331e5d4bc4dbd43657a68dc94e42124d4ff0f56b2ad`
+- `docs/evidence/runtime_ui_diagnosis_2026-11-21/uia-audit_korr-elements.txt` — `6f19bf6cd8b9de2d777c48ff1ba4eff222ce9508d9e1ffadb22c650249192d79`

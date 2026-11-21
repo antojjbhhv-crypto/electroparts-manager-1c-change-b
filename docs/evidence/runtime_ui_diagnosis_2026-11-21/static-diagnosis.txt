@@ -1,0 +1,9 @@
+Статическая диагностика config-xml (ветка audit-remediation, коммит d1d4102)
+DefaultRunMode=ManagedApplication
+Подсистема Lager: IncludeInCommandInterface=true, UseOneCommand=false
+Состав подсистемы: Catalog.Komponenten, Catalog.Lieferanten, Document.Wareneingang, Document.Verbrauch, DataProcessor.Korrektur, Report.Lagerbestand, Report.Lieferantenuebersicht
+Subsystems/Lager/Ext отсутствует: кастомный командный интерфейс не задан
+DataProcessor.Korrektur: UseStandardCommands=true, DefaultForm=DataProcessor.Korrektur.Form.Форма, форма присутствует
+Роль Korrektur: DataProcessor.Korrektur - Use, View; Catalog.Komponenten - Read, View; документы - Read/Insert/Update/Posting/View; регистры - Read/View
+FunctionalOptions отсутствуют
+MainSection и CommandInterface в Configuration.xml не заданы
