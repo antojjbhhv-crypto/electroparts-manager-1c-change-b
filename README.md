@@ -79,3 +79,12 @@ Dieses Repository ist eine anonymisierte Veröffentlichung des internen Release-
 ## 10. Lizenz
 
 Es wurde keine Lizenz hinzugefügt.
+
+## 11. Sicherheits-Nachtrag (Branch `audit-remediation`, unveröffentlicht)
+
+Der Branch `audit-remediation` enthält einen nicht freigegebenen Security-Remediation-Kandidaten:
+
+- `Bestaende` und `KorrekturJournal` erhalten nur `Read/View`; Schreibzugriffe auf das Journal werden in einem eng begrenzten serverseitigen privilegierten Abschnitt gekapselt.
+- Die Idempotenzprüfung vergleicht zusätzlich `Причина` und `Пользователь` neben Komponente und Änderung.
+
+Diese Änderungen sind noch nicht auf 1C:Enterprise 8.3.27.1508 zur Laufzeit geprüft, nicht Teil des Tags `v1.1.0-change-b` und nicht zur produktiven Übernahme freigegeben. Details und Prüfliste: `docs/SECURITY_REMEDIATION_ADDENDUM.md`.

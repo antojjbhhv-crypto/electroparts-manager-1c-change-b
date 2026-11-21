@@ -68,3 +68,12 @@ T-J/D10b/T14 (двухсеансные проверки конкурентнос
 - `config-xml/DataProcessors/Korrektur/Ext/ObjectModule.bsl`: `255b72bfdbf9f0ad1271c566c1eed0ab310299f714a7e3662ff8c09ee0f0840b`
 
 Полный список — в `MANIFEST_SHA256.txt`.
+
+## Follow-up candidate: `audit-remediation` (unreleased)
+
+Der separate Branch bereitet zwei Korrekturen vor, ohne den Tag `v1.1.0-change-b` zu verändern:
+
+1. `Korrektur` erhält keine direkten `Update`-Rechte mehr auf `Bestaende` und `KorrekturJournal`; die Journal-Schreiboperation wird in einem eng begrenzten serverseitigen privilegierten Abschnitt ausgeführt. Die Dokumenteigenschaft `PostInPrivilegedMode=true` für `Wareneingang` und `Verbrauch` bleibt unverändert.
+2. Die Wiederholungsprüfung für `OperationID` vergleicht `Komponente`, `Änderung`, `Grund` und `Benutzer`.
+
+**Status:** statischer Kandidат, noch nicht auf 1C:Enterprise 8.3.27.1508 kompiliert oder zur Laufzeit geprüft. Nicht mit Release `v1.1.0-change-b` verwechseln und nicht in eine produktive Konfiguration laden. Prüfliste: `docs/SECURITY_REMEDIATION_ADDENDUM.md`.
