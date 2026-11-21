@@ -1,4 +1,4 @@
-# Отчёт о локальном прогоне кандидата Security Remediation
+﻿# Отчёт о локальном прогоне кандидата Security Remediation
 
 **Коммит, на котором выполнялись проверки:** `33c1aba93646f96d9d46fd2beaeec88b4f48eafb`
 **Публикация отчёта и доказательств:** `3def630`, `ea0620a120c5060fa25a0b072ac408dd14280598`
@@ -103,3 +103,52 @@
 - `docs/evidence/checkmodules_test_config.txt` — `1488e8ab397e8eb219e32f4473982aeb01ed0189a7c72320205a4bf890edcb88`
 - `docs/evidence/client-rights-thick.png` — `78ecdaf48a99fd7f0fa792f3d4372a30b2595a9b4af3602efc67f8434f738d89`
 - `docs/evidence/client-harness-error.png` — `25d8fffede14fb249d91ef06cb5612a08492414bbef395e5e13889c1fb557f2d`
+
+
+## 8. Прогон базовой роли (этап 2, 2026-11-21)
+
+**HEAD ветки на начало этапа:** `9ac75b95b30a3f06478b96a35c5adb8fa44b2a54`. Бизнес-код, `Rights.xml` роли `Korrektur`, `main`, тег и релиз не изменялись.
+
+### 8.1. Этап A — базовая роль
+
+В конфигурации единственная роль — `Korrektur`; прав `ThickClient`, `ThinClient`, `MainWindowMode*` в ней нет, подходящей существующей базовой роли нет. В изолированной копии создана тестовая роль `AuditClientBase` только с правами запуска:
+
+- `ThickClient`, `ThinClient`;
+- `MainWindowModeNormal`, `MainWindowModeFullScreen`, `MainWindowModeKiosk`.
+
+Права на бизнес-объекты, регистры, документы, обработку `Korrektur` и привилегированный режим в роль не добавлялись. В ветку роль не переносилась.
+
+### 8.2. Этап B — запуск клиента
+
+Копия базы: `test-ib-d3-runtime` (из `test-ib-d3`). Пользователь `audit_korr`: `Korrektur` + `AuditClientBase`.
+
+Толстый клиент `1cv8t.exe ENTERPRISE` запускается, подключается к базе и аутентифицирует `audit_korr` — ошибок прав клиента и режима основного окна нет. Это подтверждает, что исходный блокер запуска снят сочетанием ролей, а не расширением `Korrektur`.
+
+Однако командный интерфейс пуст: раздел `Lager` и команды не отображаются, панель «Функции» открывается без списка объектов, обработка `Korrektur` недоступна. UI Automation фиксирует только кнопки `Функции`, `Оповещения`, `audit_korr`, `Сервис и настройки` и системные кнопки окна.
+
+### 8.3. Результаты
+
+| № | Проверка | Статус |
+|---|---|---|
+| 2 | Поведение роли, открытие обработки `Korrektur` | **NOT_RUN** — обработка недоступна в интерфейсе |
+| 3 | Прямые запреты записи `Bestaende` и `KorrekturJournal` | **NOT_RUN** — нет точки входа под ограниченной ролью |
+| 4 | Контролируемая запись журнала | **NOT_RUN** |
+| 5 | Идемпотентность и четыре несовпадения payload | **NOT_RUN** |
+| 6 | Восстановление привилегированного режима | **NOT_RUN** |
+| 7 | Регрессия `T-F` | **NOT_RUN** |
+
+Успешный запуск клиента не считается доказательством корректности прав на регистры; `/CheckModules` также не заменяет рантайм-проверку.
+
+### 8.4. Вердикт этапа
+
+`BLOCKED`: запуск клиента с `Korrektur` + `AuditClientBase` состоялся, но обязательные проверки 2–7 не выполнены, поскольку обработка `Korrektur` недоступна через интерфейс ограниченного пользователя. Прежние результаты (разделы 1–7) не изменялись.
+
+### 8.5. Доказательства этапа
+- `docs/evidence/runtime_base_role_2026-11-21/all-functions-empty.png` — `0edca496f468aec319078bbe72adb0b99e8bfca895a0f33ecc21f834c7885f6d`
+- `docs/evidence/runtime_base_role_2026-11-21/AuditClientBase.xml` — `d0ade5f79acb318d01eb84ad11a80c9b0b75982bdc09ca092dcf4077fd1723c0`
+- `docs/evidence/runtime_base_role_2026-11-21/AuditClientBase_Rights.xml` — `fd26d7f17415d02e4e1a426e39f258811830de86bf7eb1052eed9da39ef3cda2`
+- `docs/evidence/runtime_base_role_2026-11-21/checkmodules_runtime.txt` — `1488e8ab397e8eb219e32f4473982aeb01ed0189a7c72320205a4bf890edcb88`
+- `docs/evidence/runtime_base_role_2026-11-21/client-start-user.png` — `c7e8833c387360aeda7c9b39183c870c7eebe449dc34cda8f7438ca8c22e8113`
+- `docs/evidence/runtime_base_role_2026-11-21/dbcfg_runtime.txt` — `36cf7e06f87ff1f1e4540aea9f6bf7cc4bb652ee5122533f5833f4f8dd84624b`
+- `docs/evidence/runtime_base_role_2026-11-21/report_users.txt` — `e695ff36f60bf473694e6b7001170c91259a6c7eaf63d09161e1079f239ae67e`
+- `docs/evidence/runtime_base_role_2026-11-21/uia-elements.txt` — `6f19bf6cd8b9de2d777c48ff1ba4eff222ce9508d9e1ffadb22c650249192d79`
