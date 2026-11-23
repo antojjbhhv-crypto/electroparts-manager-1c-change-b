@@ -1,0 +1,12 @@
+UI Automation, окно 1С: MainWindowTitle=Конфигурация
+Пользователь: audit_admin (AuditFullAccess + Korrektur, полные права)
+Элементы окна:
+ControlType.Button :: Функции
+ControlType.Button :: Оповещения
+ControlType.Button :: audit_admin
+ControlType.Button :: Сервис и настройки
+ControlType.Button :: Свернуть
+ControlType.Button :: Развернуть
+ControlType.Button :: Закрыть
+ControlType.Text :: Сообщения:
+Разделы и команды подсистемы Lager отсутствуют и у администратора.

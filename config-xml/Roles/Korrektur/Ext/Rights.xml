@@ -9,11 +9,7 @@
 			<name>Read</name>
 			<value>true</value>
 		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
+				<right>
 			<name>View</name>
 			<value>true</value>
 		</right>
@@ -92,11 +88,7 @@
 			<name>Read</name>
 			<value>true</value>
 		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
+				<right>
 			<name>View</name>
 			<value>true</value>
 		</right>

@@ -1,0 +1,13 @@
+UI Automation, окно 1С: MainWindowTitle=Конфигурация
+Клиент: 1cv8t.exe ENTERPRISE /F<test-ib-d3-runtime> /Naudit_korr /P
+Пользователь: audit_korr (Korrektur + AuditClientBase)
+Элементы окна:
+ControlType.Button :: Функции
+ControlType.Button :: Оповещения
+ControlType.Button :: audit_korr
+ControlType.Button :: Сервис и настройки
+ControlType.Button :: Свернуть
+ControlType.Button :: Развернуть
+ControlType.Button :: Закрыть
+ControlType.Text :: Сообщения:
+Разделы и команды подсистемы Lager в интерфейсе отсутствуют.
